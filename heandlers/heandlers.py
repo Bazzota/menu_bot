@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import F, Router,Bot
 from aiogram.filters import CommandStart
 from aiogram.types import Message, CallbackQuery
@@ -6,11 +8,14 @@ from lexicon_ru import lexicon_ru
 from keyboards import inline_kb
 from config import main_config
 
+
 router = Router()
+logger = logging.getLogger(__name__)
 
 
 @router.message(CommandStart())
 async def process_start(message: Message):
+    logger.info(f'{message.from_user.id}')
     await message.answer(text=lexicon_ru.text_commands['start'], reply_markup=inline_kb.create_start_inline_kb())
 
 
